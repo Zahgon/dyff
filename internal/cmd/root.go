@@ -23,7 +23,6 @@ package cmd
 import (
 	"os"
 	"path/filepath"
-	"strings"
 
 	"github.com/gonvenience/bunt"
 	"github.com/gonvenience/term"
@@ -54,71 +53,43 @@ is preserved during the conversion.
 
 // NewRootCmd returns the root command (for generating documentation)
 func NewRootCmd() *cobra.Command {
-	return rootCmd
+	_ = "STUB: not implemented"
+
+	// ResetSettings resets command settings to default. This is only required by
+	// the test suite to make sure that the flag parsing works correctly.
+	return nil
 }
 
-// ResetSettings resets command settings to default. This is only required by
-// the test suite to make sure that the flag parsing works correctly.
-func ResetSettings() {
-	reportOptions = initReportConfig()
-	betweenCmdSettings = betweenCmdOptions{}
-	yamlCmdSettings = yamlCmdOptions{}
-	jsonCmdSettings = jsonCmdOptions{}
-}
+func ResetSettings() { _ = "STUB: not implemented"; return }
 
 // rearrange will rearrange the OS args to match `dyff between --flags from to`
 // to mitigate an issue in `kubectl`, which puts the `from` and `to` at the
 // second and third position in the command arguments.
-func rearrange() []string {
-	var paths, args []string
-	for _, entry := range os.Args {
-		if info, err := os.Stat(entry); err == nil && info.IsDir() {
-			paths = append(paths, entry)
-
-		} else {
-			args = append(args, entry)
-		}
-	}
-
-	return append(args, paths...)
-}
+func rearrange() []string { _ = "STUB: not implemented"; return nil }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() error {
+	_ = "STUB: not implemented"
 	// In case `KUBECTL_EXTERNAL_DIFF` is set with `dyff`, it is very likely
 	// that `kubectl` intends to use `dyff` for its `diff` command. Therefore,
 	// enable Kubernetes specific entity detection and fix the order issue.
-	if strings.Contains(os.Getenv("KUBECTL_EXTERNAL_DIFF"), name) {
-		// Make sure the OS args are in a supported order
-		os.Args = rearrange()
-
-		// Enable Kubernetes specific entity detection implicitly
-		reportOptions.KubernetesEntityDetection = true
-
-		// Add implicit exclude for metadata.managedFields as this cannot
-		// be configured via a command-line flag using KUBECTL_EXTERNAL_DIFF
-		// due to an bug/feature in kubectl that ignore command-line flags
-		// in the diff environment variable with non alphanumeric characters
-		reportOptions.ExcludeRegexps = append(reportOptions.ExcludeRegexps, "^/metadata/managedFields")
-	}
-
-	if err := rootCmd.Execute(); err != nil {
-		// Special case ExitCode, which means that we will exit immediately
-		// with the given exit code
-		if _, ok := err.(errorWithExitCode); ok {
-			return err
-		}
-
-		// In any other case, create a default ExitCode with `error` value
-		return errorWithExitCode{
-			value: 255,
-			cause: err,
-		}
-	}
-
 	return nil
 }
+
+// Make sure the OS args are in a supported order
+
+// Enable Kubernetes specific entity detection implicitly
+
+// Add implicit exclude for metadata.managedFields as this cannot
+// be configured via a command-line flag using KUBECTL_EXTERNAL_DIFF
+// due to an bug/feature in kubectl that ignore command-line flags
+// in the diff environment variable with non alphanumeric characters
+
+// Special case ExitCode, which means that we will exit immediately
+// with the given exit code
+
+// In any other case, create a default ExitCode with `error` value
 
 func init() {
 	rootCmd.Flags().SortFlags = false

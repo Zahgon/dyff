@@ -21,14 +21,7 @@
 package dyff
 
 import (
-	"bufio"
-	"fmt"
 	"io"
-
-	"github.com/gonvenience/bunt"
-	"github.com/gonvenience/term"
-	"github.com/gonvenience/text"
-	"github.com/gonvenience/ytbx"
 )
 
 const (
@@ -42,26 +35,6 @@ type BriefReport struct {
 }
 
 // WriteReport writes a brief summary to the provided writer
-func (report *BriefReport) WriteReport(out io.Writer) error {
-	writer := bufio.NewWriter(out)
-	defer func() { _ = writer.Flush() }()
+func (report *BriefReport) WriteReport(out io.Writer) error { _ = "STUB: not implemented"; return nil }
 
-	noOfChanges := bunt.Style(text.Plural(len(report.Diffs), "change"), bunt.Bold())
-	niceFrom := ytbx.HumanReadableLocationInformation(report.From)
-	niceTo := ytbx.HumanReadableLocationInformation(report.To)
-
-	var template string
-	switch {
-	case len(oneline)-6+plainTextLength(noOfChanges)+plainTextLength(niceFrom)+plainTextLength(niceTo) < term.GetTerminalWidth():
-		template = oneline
-
-	default:
-		template = twoline
-	}
-
-	_, _ = fmt.Fprintf(writer, template, noOfChanges, niceFrom, niceTo)
-
-	// Finish with one last newline so that we do not end next to the prompt
-	_, _ = writer.WriteString("\n")
-	return nil
-}
+// Finish with one last newline so that we do not end next to the prompt

@@ -21,21 +21,11 @@
 package dyff
 
 func mapItemsToSlice[E any, S ~[]E, T any](slice S, fn func(e E) T) []T {
-	ret := make([]T, len(slice))
-	for i, e := range slice {
-		ret[i] = fn(e)
-	}
-	return ret
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func reject[E comparable, S ~[]E](slice S, elt E) (ret S, ok bool) {
-	ret = make(S, 0, len(slice))
-	for _, e := range slice {
-		if elt == e {
-			ok = true
-		} else {
-			ret = append(ret, e)
-		}
-	}
-	return
+	_ = "STUB: not implemented"
+	return *new(S), false
 }

@@ -35,18 +35,8 @@ type errorWithExitCode struct {
 
 var _ ExitCode = errorWithExitCode{}
 
-func (e errorWithExitCode) Value() int {
-	return e.value
-}
+func (e errorWithExitCode) Value() int { _ = "STUB: not implemented"; return 0 }
 
-func (e errorWithExitCode) Cause() error {
-	return e.cause
-}
+func (e errorWithExitCode) Cause() error { _ = "STUB: not implemented"; return nil }
 
-func (e errorWithExitCode) Error() string {
-	if e.cause != nil {
-		return e.cause.Error()
-	}
-
-	return ""
-}
+func (e errorWithExitCode) Error() string { _ = "STUB: not implemented"; return "" }

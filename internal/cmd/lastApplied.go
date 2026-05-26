@@ -78,22 +78,8 @@ func init() {
 }
 
 func lookUpLastAppliedConfiguration(inputFile ytbx.InputFile) (ytbx.InputFile, error) {
-	kubectlLastApplied, err := ytbx.Grab(inputFile.Documents[0], "/metadata/annotations/kubectl.kubernetes.io\\/last-applied-configuration")
-	if err != nil {
-		return ytbx.InputFile{}, fmt.Errorf("provided input file does not contain the last applied configuration metadata")
-	}
-
-	documents, err := ytbx.LoadDocuments([]byte(kubectlLastApplied.Value))
-	if err != nil {
-		return ytbx.InputFile{}, err
-	}
-
-	return ytbx.InputFile{
-		Documents: documents,
-		Location:  "/metadata/annotations/kubectl.kubernetes.io/last-applied-configuration",
-	}, nil
+	_ = "STUB: not implemented"
+	return *new(ytbx.InputFile), nil
 }
 
-func purgeWellKnownMetadataEntries(document *yamlv3.Node) {
-	_, _ = ytbx.Delete(document, "/metadata/annotations/kubectl.kubernetes.io\\/last-applied-configuration")
-}
+func purgeWellKnownMetadataEntries(document *yamlv3.Node) { _ = "STUB: not implemented"; return }

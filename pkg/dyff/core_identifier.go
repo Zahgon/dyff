@@ -21,9 +21,6 @@
 package dyff
 
 import (
-	"fmt"
-	"strings"
-
 	yamlv3 "go.yaml.in/yaml/v3"
 )
 
@@ -52,34 +49,16 @@ type singleField struct {
 var _ listItemIdentifier = (*singleField)(nil)
 
 func (sf *singleField) FindNodeByName(sequenceNode *yamlv3.Node, name string) (*yamlv3.Node, error) {
-	for _, mappingNode := range sequenceNode.Content {
-		nameOfNode, err := sf.Name(mappingNode)
-		if err != nil {
-			return nil, err
-		}
-
-		if nameOfNode == name {
-			return mappingNode, nil
-		}
-	}
-
-	return nil, fmt.Errorf("failed to find mapping entry with name %q", name)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (sf *singleField) Name(mappingNode *yamlv3.Node) (string, error) {
-	for i := 0; i < len(mappingNode.Content); i += 2 {
-		k, v := mappingNode.Content[i], mappingNode.Content[i+1]
-		if k.Value == sf.IdentifierFieldName {
-			return followAlias(v).Value, nil
-		}
-	}
-
-	return "", fmt.Errorf("no key %q found in map", sf.IdentifierFieldName)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
-func (sf *singleField) String() string {
-	return sf.IdentifierFieldName
-}
+func (sf *singleField) String() string { _ = "STUB: not implemented"; return "" }
 
 // --- --- ---
 
@@ -90,54 +69,15 @@ type k8sItemIdentifier struct{}
 var k8sItem listItemIdentifier = (*k8sItemIdentifier)(nil)
 
 func (i *k8sItemIdentifier) FindNodeByName(sequenceNode *yamlv3.Node, name string) (*yamlv3.Node, error) {
-	for _, mappingNode := range sequenceNode.Content {
-		nameOfNode, err := i.Name(mappingNode)
-		if err != nil {
-			return nil, err
-		}
-
-		if nameOfNode == name {
-			return mappingNode, nil
-		}
-	}
-
-	return nil, fmt.Errorf("failed to find mapping entry with name %q", name)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (i *k8sItemIdentifier) Name(node *yamlv3.Node) (string, error) {
-	if node.Kind != yamlv3.MappingNode {
-		return "", fmt.Errorf("provided node is not a mapping node")
-	}
-
-	var elem []string
-
-	apiVersion, err := grab(node, "apiVersion")
-	if err != nil {
-		return "", err
-	}
-	elem = append(elem, apiVersion.Value)
-
-	kind, err := grab(node, "kind")
-	if err != nil {
-		return "", err
-	}
-	elem = append(elem, kind.Value)
-
-	// namespace is optional and will be omitted if not set
-	namespace, err := grab(node, "metadata.namespace")
-	if err == nil {
-		elem = append(elem, namespace.Value)
-	}
-
-	name, err := grab(node, "metadata.name")
-	if err != nil {
-		return "", err
-	}
-	elem = append(elem, name.Value)
-
-	return strings.Join(elem, "/"), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
-func (lf *k8sItemIdentifier) String() string {
-	return "resource"
-}
+// namespace is optional and will be omitted if not set
+
+func (lf *k8sItemIdentifier) String() string { _ = "STUB: not implemented"; return "" }

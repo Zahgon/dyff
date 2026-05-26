@@ -22,10 +22,6 @@ package main
 
 import (
 	"log"
-	"os"
-
-	"github.com/homeport/dyff/internal/cmd"
-	"github.com/spf13/cobra/doc"
 )
 
 const targetDir = ".docs/commands"
@@ -36,19 +32,4 @@ func main() {
 	}
 }
 
-func mainE() error {
-	rcmd := cmd.NewRootCmd()
-	rcmd.Use = "dyff"
-	rcmd.Short = "dyff"
-	rcmd.DisableAutoGenTag = true
-
-	if err := os.RemoveAll(targetDir); err != nil {
-		return err
-	}
-
-	if err := os.MkdirAll(targetDir, os.FileMode(0755)); err != nil {
-		return err
-	}
-
-	return doc.GenMarkdownTree(rcmd, targetDir)
-}
+func mainE() error { _ = "STUB: not implemented"; return nil }
